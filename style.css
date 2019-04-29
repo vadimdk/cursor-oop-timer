@@ -1,0 +1,20 @@
+
+#container {
+    
+    
+}
+
+#timers {
+  color: white;
+  font-size: 23px;
+}
+
+#timers-container {
+  background-color: black;  
+}
+
+.counter {
+    background-color: red;
+    color: white;
+  font-size: 23px;
+}
