@@ -11,36 +11,37 @@
 
 const container = document.querySelector("#timers-container");
 
-const TYPES = {
-     timerfirst: 10000,
-    timersecond: 99.3 *60000
+const INTERVALS = {
+     timerfirst: 59000,
+     timersecond: 98*60*1000,
+     timertest: 20000
 } 
 
 class Timer {
     constructor(){
-        this.distance = 59000;
-//        this.type = type in TYPES ? type : "foo";
+//        this.distance = 59000;
+        this.type = INTERVALS.timersecond;
         this.render();
     }
      
     createTimer(){
         let xTime = new Date("Jan 5, 2019 15:37:00").getTime();
-    let countDownDate = xTime + this.distance;
-  this.interval = setInterval(() =>{
+        let countDownDate = xTime + this.type;
+    this.interval = setInterval(() =>{
         xTime +=1000;
-      let diff = countDownDate - xTime;
-       let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        let diff = countDownDate - xTime;
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
         
-  // Display the result in the element with id="demo"
-  document.getElementById("timers").innerHTML =  minutes + ": " + seconds;
+  // Display the result in the element with id=""
+      document.getElementById("timers").innerHTML = minutes + ": " + seconds;
 
   // If the count down is finished, write some text 
-  if (diff <= 0) {
-      clearInterval(this.interval);
-      document.getElementById("timers").innerHTML = "01"+":"+"00";
-  }
-}, 1000);
+   if (diff <= 0) {
+       clearInterval(this.interval);
+       document.getElementById("timers").innerHTML = "01"+":"+"00";
+    }
+ }, 1000);
         
         
     }
@@ -63,5 +64,5 @@ class Timer {
         this.timer.addEventListener("mouseleave", this.continueInterval.bind(this));
     }
 }
-    
- new Timer( );   
+   
+ new Timer();   
