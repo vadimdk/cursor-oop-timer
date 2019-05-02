@@ -11,58 +11,101 @@
 
 const container = document.querySelector("#timers-container");
 
-const INTERVALS = {
-     timerfirst: 59000,
-     timersecond: 98*60*1000,
-     timertest: 20000
-} 
+//const INTERVALS = {
+//     timerfirst: "one",
+//     timersecond: "two",
+//     timertest: "false"
+//} 
+//
+//class Timer {
+//    constructor(number,type){
+//
+//       this.number = number in INTERVALS ? number : "timertest";
+//        this.type = type;
+//        this.render();
+//    }
+//    
+//    
+//    
+//        
+//        
+//    }
+//    
+//    pauseInterval(){
+//        clearInterval(this.interval);
+//    }
+//    continueInterval(){
+//        this.createTimer();
+//    }
+//    
+//    render(){
+//        this.timer = document.createElement("div");
+//        this.timer.classList.add("counter");
+//        this.timer.classList.add(this.number);
+//        container.append(this.timer);
+//        
+//        this.timer.append(this.createTimer());
+//
+//        
+////        this.timer.addEventListener("mouseenter", this.pauseInterval.bind(this));
+////        this.timer.addEventListener("mouseleave", this.continueInterval.bind(this));
+//        
+//    }
+//}
+//  
+
+
+
 
 class Timer {
-    constructor(){
-//        this.distance = 59000;
-        this.type = INTERVALS.timersecond;
+    constructor(minutes){
+        this.secondsRem = minutes * 60;
         this.render();
     }
      
-    createTimer(){
-        let xTime = new Date("Jan 5, 2019 15:37:00").getTime();
-        let countDownDate = xTime + this.type;
-    this.interval = setInterval(() =>{
-        xTime +=1000;
-        let diff = countDownDate - xTime;
-        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
-  // Display the result in the element with id=""
-      document.getElementById("timers").innerHTML = minutes + ": " + seconds;
 
-  // If the count down is finished, write some text 
-   if (diff <= 0) {
-       clearInterval(this.interval);
-       document.getElementById("timers").innerHTML = "01"+":"+"00";
+    tick(){
+     this.timeDisplay = document.createElement("div");
+        
+     this.timeDisplay.classList.add("timecounter");
+        
+        this.interval = setInterval(() =>{   
+         
+           let min = Math.floor(this.secondsRem / 60);
+        
+           let sec = this.secondsRem - (min * 60);
+        
+         if (sec < 10) {
+             sec = "0" + sec; 
     }
- }, 1000);
+             let time = min + ":" + sec;
         
+             this.timeDisplay.innerHTML = time;
         
+         if (this.secondsRem === 0) {
+             clearInterval(this.interval);
+        }
+            this.secondsRem --;
+         }, 1000);
+       return this.timeDisplay; 
+         
     }
     
-    pauseInterval(){
-        clearInterval(this.interval);
-    }
-    continueInterval(){
-        this.createTimer();
-    }
+    
     
     render(){
         this.timer = document.createElement("div");
         this.timer.classList.add("counter");
-        this.timer.classList.add("this.type");
-        this.timer.append(this.createTimer());
-        
+       
         container.append(this.timer);
-        this.timer.addEventListener("mouseenter", this.pauseInterval.bind(this));
-        this.timer.addEventListener("mouseleave", this.continueInterval.bind(this));
+        
+        this.timer.append(this.tick());
+
+
+        
     }
+    
 }
-   
- new Timer();   
+    
+    new Timer(1);
+    new Timer(99);

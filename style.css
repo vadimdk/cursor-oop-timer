@@ -4,17 +4,36 @@
     
 }
 
+/*
 #timers {
   color: white;
   font-size: 23px;
 }
+*/
 
 #timers-container {
-  background-color: black;  
+  background-color: black; 
+  width: 900px;
+    height: 190px;
 }
 
 .counter {
+    width: 600px;
+    height: 90px;
     background-color: red;
     color: white;
   font-size: 23px;
 }
+
+.timecounter {
+    width: 400px;
+    height: 60px;
+    background-color: green;
+    color: white;
+  font-size: 23px;
+    font-family: Helvetica;
+    margin-bottom: 20px;
+    padding: 20px;
+    
+}
+
