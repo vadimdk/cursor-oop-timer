@@ -58,8 +58,10 @@ const container = document.querySelector("#timers-container");
 
 
 class Timer {
-    constructor(minutes){
+    constructor(minutes,step){
+        this.step = step;
         this.secondsRem = minutes * 60;
+        this.buttonHandler = this.buttonHandler.bind(this);
         this.render();
     }
      
@@ -85,14 +87,29 @@ class Timer {
          if (this.secondsRem === 0) {
              clearInterval(this.interval);
         }
-            this.secondsRem --;
-         }, 1000);
+            this.secondsRem -=(this.step/1000);
+         }, this.step);
        return this.timeDisplay; 
          
     }
     
+    createButton(){
+        this.button = document.createElement("button");
+        this.button.classList.add("btn");
+        this.button.innerText = "Start";
+        this.button.addEventListener("click", this.buttonHandler.bind(this));
+        return this.button; 
+    }
     
-    
+    buttonHandler() {
+        if (this._inProccess) {
+            this.button.innerText = "Start";
+            this.pauseTimer();
+        } else {
+            this.button.innerText = "Stop";
+            this.startTimer();
+        }
+    }
     render(){
         this.timer = document.createElement("div");
         this.timer.classList.add("counter");
@@ -100,6 +117,7 @@ class Timer {
         container.append(this.timer);
         
         this.timer.append(this.tick());
+        this.timer.append(this.createButton());
 
 
         
@@ -107,5 +125,5 @@ class Timer {
     
 }
     
-    new Timer(1);
-    new Timer(99);
+    new Timer(1,1000);
+    new Timer(99,2000);

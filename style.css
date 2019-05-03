@@ -37,3 +37,20 @@
     
 }
 
+.btn {
+    display: flex;
+    align-items: flex-start;
+    text-align: center;
+    cursor: default;
+    color: buttontext;
+    background-color: buttonface;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    position: relative;
+    left: 20px;
+    top: -55px;
+}
