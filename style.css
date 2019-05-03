@@ -1,36 +1,23 @@
-
-#container {
-    
-    
+body {
+    background-color: black;
 }
 
-/*
-#timers {
-  color: white;
-  font-size: 23px;
-}
-*/
+
 
 #timers-container {
   background-color: black; 
   width: 900px;
-    height: 190px;
+  height: 190px;
 }
 
-.counter {
-    width: 600px;
-    height: 90px;
-    background-color: red;
-    color: white;
-  font-size: 23px;
-}
+
 
 .timecounter {
     width: 400px;
     height: 60px;
-    background-color: green;
+    background-color: black;
     color: white;
-  font-size: 23px;
+    font-size: 23px;
     font-family: Helvetica;
     margin-bottom: 20px;
     padding: 20px;
@@ -41,16 +28,19 @@
     display: flex;
     align-items: flex-start;
     text-align: center;
-    cursor: default;
-    color: buttontext;
-    background-color: buttonface;
+    cursor: pointer;
+    color: snow;
+    background-color: blue;
     border-width: 2px;
     border-style: outset;
     border-color: buttonface;
     border-image: initial;
-    margin: 0em;
-    font: 400 13.3333px Arial;
+    border-radius: 25px;
+    margin: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font: 400 14.3333px Helvetica;
     position: relative;
-    left: 20px;
+    left: -9px;
     top: -55px;
 }

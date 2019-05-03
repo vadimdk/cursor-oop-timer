@@ -11,65 +11,34 @@
 
 const container = document.querySelector("#timers-container");
 
-//const INTERVALS = {
-//     timerfirst: "one",
-//     timersecond: "two",
-//     timertest: "false"
-//} 
-//
-//class Timer {
-//    constructor(number,type){
-//
-//       this.number = number in INTERVALS ? number : "timertest";
-//        this.type = type;
-//        this.render();
-//    }
-//    
-//    
-//    
-//        
-//        
-//    }
-//    
-//    pauseInterval(){
-//        clearInterval(this.interval);
-//    }
-//    continueInterval(){
-//        this.createTimer();
-//    }
-//    
-//    render(){
-//        this.timer = document.createElement("div");
-//        this.timer.classList.add("counter");
-//        this.timer.classList.add(this.number);
-//        container.append(this.timer);
-//        
-//        this.timer.append(this.createTimer());
-//
-//        
-////        this.timer.addEventListener("mouseenter", this.pauseInterval.bind(this));
-////        this.timer.addEventListener("mouseleave", this.continueInterval.bind(this));
-//        
-//    }
-//}
-//  
 
 
 
 
 class Timer {
-    constructor(minutes,step){
+    constructor(minutes, step, autoRun = false){
         this.step = step;
         this.secondsRem = minutes * 60;
+        this.restart = minutes * 60;
+        this.autoRun = autoRun;
+        this.counting = false;
         this.buttonHandler = this.buttonHandler.bind(this);
         this.render();
+      if(autoRun){
+          this.button.innerText = "Stop";
+            this.continueInterval();
+      }
     }
-     
-
-    tick(){
-     this.timeDisplay = document.createElement("div");
+    
+    //метод класса отрисовывает output
+     createTimer() {
+        this.timeDisplay = document.createElement("div");
         
      this.timeDisplay.classList.add("timecounter");
+        return this.timeDisplay;
+    }
+
+    tick(){
         
         this.interval = setInterval(() =>{   
          
@@ -86,12 +55,16 @@ class Timer {
         
          if (this.secondsRem === 0) {
              clearInterval(this.interval);
+              this.secondsRem = this.restart;
+             this.buttonHandler();
         }
             this.secondsRem -=(this.step/1000);
+            
          }, this.step);
-       return this.timeDisplay; 
-         
+ 
     }
+    
+    
     
     createButton(){
         this.button = document.createElement("button");
@@ -102,28 +75,39 @@ class Timer {
     }
     
     buttonHandler() {
-        if (this._inProccess) {
+        if (this.counting) {
+            this.pauseInterval();
             this.button.innerText = "Start";
-            this.pauseTimer();
+            
         } else {
+            this.continueInterval();
             this.button.innerText = "Stop";
-            this.startTimer();
+            
         }
     }
+    
+    
+
+    continueInterval(){
+        this.counting = true;
+        this.tick();
+    }
+    
+    pauseInterval(){
+        this.counting = false;
+        clearInterval(this.interval);
+        this.interval = null;
+    }
+    
+    
     render(){
-        this.timer = document.createElement("div");
-        this.timer.classList.add("counter");
-       
-        container.append(this.timer);
-        
-        this.timer.append(this.tick());
-        this.timer.append(this.createButton());
 
+        container.append(this.createTimer());
+        container.append(this.createButton());
 
-        
     }
     
 }
     
-    new Timer(1,1000);
-    new Timer(99,2000);
+    new Timer(0.5, 1000);
+    new Timer(1, 2000, true);
