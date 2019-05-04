@@ -24,9 +24,10 @@ class Timer {
         this.counting = false;
         this.buttonHandler = this.buttonHandler.bind(this);
         this.render();
-      if(autoRun){
+      if(autoRun == true){
           this.button.innerText = "Stop";
-            this.continueInterval();
+          this.continueInterval();
+          
       }
     }
     
@@ -52,7 +53,7 @@ class Timer {
              let time = min + ":" + sec;
         
              this.timeDisplay.innerHTML = time;
-        
+    
          if (this.secondsRem === 0) {
              clearInterval(this.interval);
               this.secondsRem = this.restart;
@@ -75,12 +76,14 @@ class Timer {
     }
     
     buttonHandler() {
-        if (this.counting) {
+        if (this.counting ) {
             this.pauseInterval();
+            this.pauseLineInterval();
             this.button.innerText = "Start";
             
         } else {
             this.continueInterval();
+            this.continueLineInterval();
             this.button.innerText = "Stop";
             
         }
@@ -91,23 +94,64 @@ class Timer {
     continueInterval(){
         this.counting = true;
         this.tick();
+        
     }
     
     pauseInterval(){
         this.counting = false;
         clearInterval(this.interval);
         this.interval = null;
+        
     }
     
+     createLine(){
+        this.line = document.createElement("div");
+        this.line.classList.add("line");
+        return this.line;
+    }
+    
+    lifeInterval(){
+        this.lineinterval = setInterval(() => {
+            const currentWidth = this.line.offsetWidth; 
+            const percent = (this.width / 100);
+            if(currentWidth - percent < 0){
+                this.line.remove();
+                return;
+            }
+            this.line.style.width = `${currentWidth - percent}px`; 
+            
+        }, this.step);
+        
+    }
+    
+    continueLineInterval(){
+        this.counting = true;
+        this.lifeInterval();
+    }
+    
+    pauseLineInterval(){
+        this.counting = false;
+        
+        clearInterval(this.lineinterval);
+        
+    }
     
     render(){
-
-        container.append(this.createTimer());
-        container.append(this.createButton());
+        this.timerblock = document.createElement("div");
+        this.timerblock.classList.add("timerblock");
+        
+        this.timerblock.append(this.createTimer());
+        this.timerblock.append(this.createButton());
+        this.timerblock.append(this.createLine());
+        container.append(this.timerblock);
+        
+        this.width = this.line.offsetWidth; 
+        this.lifeInterval();
+   
 
     }
     
 }
     
-    new Timer(0.5, 1000);
-    new Timer(1, 2000, true);
+    new Timer(1, 1000);
+    new Timer(99, 2000, true);
