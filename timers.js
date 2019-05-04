@@ -31,14 +31,22 @@ class Timer {
       }
     }
     
-    //метод класса отрисовывает output
+    createLine(){
+        this.line = document.createElement("div");
+        this.line.classList.add("line");
+        return this.line;
+    }
+    
+    
+    //метод класса отрисовывает блок для таймера 
      createTimer() {
-        this.timeDisplay = document.createElement("div");
+           this.timeDisplay = document.createElement("div");
         
-     this.timeDisplay.classList.add("timecounter");
-        return this.timeDisplay;
+           this.timeDisplay.classList.add("timecounter");
+             return this.timeDisplay;
     }
 
+    
     tick(){
         
         this.interval = setInterval(() =>{   
@@ -58,6 +66,10 @@ class Timer {
              clearInterval(this.interval);
               this.secondsRem = this.restart;
              this.buttonHandler();
+             
+             clearInterval(this.lineinterval);
+             this.createLine();
+             
         }
             this.secondsRem -=(this.step/1000);
             
@@ -104,19 +116,15 @@ class Timer {
         
     }
     
-     createLine(){
-        this.line = document.createElement("div");
-        this.line.classList.add("line");
-        return this.line;
-    }
+
     
     lifeInterval(){
         this.lineinterval = setInterval(() => {
             const currentWidth = this.line.offsetWidth; 
-            const percent = (this.width / 100);
+            const percent = (this.width / this.restart );
             if(currentWidth - percent < 0){
-                this.line.remove();
-                return;
+
+                return this.line.style.width = `${this.restart * 12}px`;
             }
             this.line.style.width = `${currentWidth - percent}px`; 
             
@@ -153,5 +161,5 @@ class Timer {
     
 }
     
-    new Timer(1, 1000);
-    new Timer(99, 2000, true);
+    new Timer(1, 1000, true);
+    new Timer(3, 2000, true);

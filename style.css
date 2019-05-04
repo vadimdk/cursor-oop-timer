@@ -55,8 +55,8 @@ body {
 }
 
 .line{
-/*    width: 720px;*/
-    width: 100%;
+    width: 720px;
+    
     height: 40px;
     position: relative;
     bottom: 105px;
